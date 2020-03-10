@@ -1,0 +1,37 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+	<title>Video Player</title> 
+	<link rel="stylesheet" type="text/css" href="videostyle.css">
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
+
+<body>
+	<div class="container">
+		<div class="c-video">
+			<video  class="video" id="video1"> 
+				<source src="Sample video\video.mp4" type="video/mp4"> 
+				THE VIDEO CANNOT BE PLAYED.... 
+			</video>
+			
+			<div class="videoControls">
+				<div class="buttons">				
+					<button class="fas fa-volume-mute" id="mute" title="Mute/Unmute">
+					</button>
+					<input id="soundslider" type="range" min="0" max="100" value="100" range="1" title="Volume seek">
+					<button id="back" title="Back by 5s" class="fas fa-backward"></button>
+					<button id="play" title="play/pause" class="fab fa-google-play"></button>
+					<span id="currenttime">00:00</span><span id="slash">  /  </span><span id="durationtime">00:00</span>
+					<button id="for" title="Forward by 5s" class="fas fa-forward"></button> 
+					<button id="reset" title="Replay video" class="fab fa-rev"></button>					
+					<button id="fullscreen" title="Fullscreen" class="fas fa-expand"></button>	
+					<div class="seekbar">
+						<input id="seekslider" type="range" min="0" max="100" value="0" range="1" title="Movie seek">
+						<div class="red" id="red" style="position: absolute; background: #f00; height: 4px; width: 0;bottom: 49px;left: -0.1%"></div>
+					</div>				
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="videologic.js"></script>
+</body> 
+</html>
