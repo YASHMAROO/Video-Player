@@ -6,17 +6,25 @@ html
 	background: linear-gradient(to right, #ec2F4B, #009FFF); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
 }
+body
+{
+	border: none;
+	width: 100%;
+	background: #009FFF;  /* fallback for old browsers */
+	background: -webkit-linear-gradient(to right, #ec2F4B, #009FFF);  /* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(to right, #ec2F4B, #009FFF); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}
 .container
 {
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	height: 100vh;
-	background: #009FFF;  /* fallback for old browsers */
-	background: -webkit-linear-gradient(to right, #ec2F4B, #009FFF);  /* Chrome 10-25, Safari 5.1-6 */
-	background: linear-gradient(to right, #ec2F4B, #009FFF); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+	margin: auto;
 	max-width: 1500px;
 	max-height: 100vh;
+	border: none;
 }
 .c-video
 {
