@@ -43,7 +43,6 @@ body
 	position: absolute;
 	transform: translateY(100%) translateY(-5px);
 	transition: all .25s ease-in;
-
 }
 .buttons
 {
@@ -63,7 +62,7 @@ button
 {
 	border: none;
 	background: none;
-	width: 50px;
+	width: 40px;
 	height: 30px;
 	font-size: 22px;
 	margin-right: 5px;
@@ -137,6 +136,16 @@ button:hover
 	font-size: 22px;
 	text-align: center;	
 }
+.fa-step-forward
+{
+	font-size: 22px;
+	text-align: center;
+}
+.fa-step-backward
+{
+	font-size: 22px;
+	text-align: center;
+}
 input[type='range']
 {
 	height: 4px;
@@ -167,4 +176,38 @@ input[type='range']:hover::-webkit-slider-thumb
 	height: 4px;
 	bottom: 45px;
 	left: -0.5%;
+}
+
+.videolist
+{
+	text-align: center;
+	margin-top: -100px;
+	margin-left: 45%;
+	max-width: 200px;
+	line-height: 40px;
+}
+p
+{
+	background: #fff;
+}
+a
+{
+	color: red;
+	text-decoration: none;	
+}
+p:nth-child(2n)
+{
+	background-color: #1eea7e;
+}
+p:hover
+{
+	background: blue;
+}
+h4
+{
+	background: #2980b9;
+}
+a:hover
+{
+	text-decoration: underline;
 }
