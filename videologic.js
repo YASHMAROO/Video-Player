@@ -1,3 +1,25 @@
+var newVideo=[
+	{
+		video: "Video",
+		source: "Sample Video/video.mp4"
+	},
+	{
+		video: "Video 2",
+		source: "Sample Video/Video2.mp4"
+	},
+	{
+		video: "Singham",
+		source: "Sample Video/Singham.mp4"
+	},
+	{
+		video: "Mr.Bean",
+		source: "Sample Video/Mr. Bean.mp4"
+	},
+	{
+		video: "Father on Holidays",
+		source: "Sample Video/Father on Holidays"
+	}
+];
 var pbutton=document.querySelector("#play");
 var muted=document.getElementById("mute");
 var video=document.querySelector(".video");
@@ -13,8 +35,15 @@ var seekSlide=document.getElementById("red");
 var  currentTi=document.getElementById("currenttime");
 var durationTi=document.getElementById("durationtime");
 var soundSlider=document.getElementById("soundslider");
+var next=document.getElementById("changeVideo");
+var v1=document.querySelector(".v1");
+var v2=document.querySelector(".v2");
+var v3=document.querySelector(".v3");
+var v4=document.querySelector(".v4");
+var v5=document.querySelector(".v5");
 var m=true;
 var isFullScreen=false;
+var i=1;
 
 pbutton.addEventListener("click",playpause);
 muted.addEventListener("click",volumeVideo);
@@ -34,6 +63,62 @@ fullScreen.addEventListener("click",toggleFullScreen);
 seekSlider.addEventListener("change",vidSeek);
 video.addEventListener("timeupdate",updateSeek);
 soundSlider.addEventListener("change",soundSeek);
+next.addEventListener("click",nextVideo);
+v1.addEventListener("click",function()
+{
+	var source="D:/udemy/video/Sample Video/"+v1.innerHTML;
+	video.pause();
+	video.setAttribute("src",source);
+	video.load();
+	video.play();
+	pbutton.classList.remove("fa-google-play");
+	pbutton.classList.add("fa-pause");
+	pbutton.style.fontSize="22px";
+});
+v2.addEventListener("click",function()
+{
+	var source="D:/udemy/video/Sample Video/"+v2.innerHTML;
+	video.pause();
+	video.setAttribute("src",source);
+	video.load();
+	video.play();
+	pbutton.classList.remove("fa-google-play");
+	pbutton.classList.add("fa-pause");
+	pbutton.style.fontSize="22px";
+});
+v3.addEventListener("click",function()
+{
+	var source="D:/udemy/video/Sample Video/"+v3.innerHTML;
+	video.pause();
+	video.setAttribute("src",source);
+	video.load();
+	video.play();
+	pbutton.classList.remove("fa-google-play");
+	pbutton.classList.add("fa-pause");
+	pbutton.style.fontSize="22px";
+});
+v4.addEventListener("click",function()
+{
+	var source="D:/udemy/video/Sample Video/"+v4 .innerHTML;
+	video.pause();
+	video.setAttribute("src",source);
+	video.load();
+	video.play();
+	pbutton.classList.remove("fa-google-play");
+	pbutton.classList.add("fa-pause");
+	pbutton.style.fontSize="22px";
+});
+v5.addEventListener("click",function()
+{
+	var source="D:/udemy/video/Sample Video/"+v5 .innerHTML;
+	video.pause();
+	video.setAttribute("src",source);
+	video.load();
+	video.play();
+	pbutton.classList.remove("fa-google-play");
+	pbutton.classList.add("fa-pause");
+	pbutton.style.fontSize="22px";
+});
 
 
 function playpause()
@@ -177,5 +262,30 @@ function soundSeek()
 		muted.classList.add("fa-volume-up");
 		muted.style.fontSize="22px";
 		muted.style.color="red";
+	}
+	else
+	{
+		muted.classList.add("fa-volume-mute");
+		muted.classList.remove("fa-volume-up");
+		muted.style.fontSize="22px";
+		muted.style.color="red";
+	}
+}
+
+function nextVideo()
+{
+	if(i<=newVideo.length-1)
+	{
+		video.pause();
+		video.setAttribute("src",newVideo[i++]["source"]);
+		video.load();
+		video.play();
+		pbutton.classList.remove("fa-google-play");
+		pbutton.classList.add("fa-pause");
+		pbutton.style.fontSize="22px";
+	}
+	else
+	{
+		alert("Playlist ended");
 	}
 }
