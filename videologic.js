@@ -38,7 +38,7 @@ next=document.getElementById("changeVideo"),
 a=document.querySelectorAll("a"),
 m=true,
 isFullScreen=false,
-i=1;
+i=0;
 
 pbutton.addEventListener("click",playpause);
 muted.addEventListener("click",volumeVideo);
@@ -213,15 +213,19 @@ function nextVideo()
 	{
 		video.pause();
 		video.setAttribute("src",newVideo[i++]["source"]);
+		video.currentTime=0.0;
+		var nt=video.currentTime*(100/video.duration);
+		seekSlider.value=nt;
+		seekSlide.style.width = nt +"%";
 		video.load();
-		video.play();
-		pbutton.classList.remove("fa-google-play");
-		pbutton.classList.add("fa-pause");
+		video.pause();
+		pbutton.classList.add("fa-google-play");
+		pbutton.classList.remove("fa-pause");
 		pbutton.style.fontSize="22px";
 	}
 	else
 	{
-		alert("Playlist ended");
+		i=0;
 	}
 }
 
@@ -229,17 +233,20 @@ function show()
 {
 	var source="D:/udemy/video/Sample Video/"+this.innerHTML;
 	video.pause();
+	video.currentTime=0.0;
+	var nt=video.currentTime*(100/video.duration);
+	seekSlider.value=nt;
+	seekSlide.style.width = nt +"%";
 	video.setAttribute("src",source);
 	video.load();
-	video.play();
-	pbutton.classList.remove("fa-google-play");
-	pbutton.classList.add("fa-pause");
+	video.pause();
+	pbutton.classList.add("fa-google-play");
+	pbutton.classList.remove("fa-pause");
 	pbutton.style.fontSize="22px";
 }
 
 function end()
 {
-	alert("Video has ended");
 	video.currentTime=0.0;
 	pbutton.classList.add("fa-google-play");
 	pbutton.classList.remove("fa-pause");
