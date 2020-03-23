@@ -1,25 +1,10 @@
 var newVideo=[
 	{
-		video: "Video",
-		source: "Sample Video/video.mp4"
-	},
-	{
-		video: "Video 2",
-		source: "Sample Video/Video2.mp4"
-	},
-	{
-		video: "Singham",
-		source: "Sample Video/Singham.mp4"
-	},
-	{
-		video: "Mr.Bean",
-		source: "Sample Video/Mr. Bean.mp4"
-	},
-	{
-		video: "Father on Holidays",
-		source: "Sample Video/Father on Holidays"
+		video:"Video",
+		source:"Sample Video/video.mp4"
 	}
 ];
+
 var pbutton=document.querySelector("#play"),
 muted=document.getElementById("mute"),
 video=document.querySelector(".video"),
@@ -34,25 +19,41 @@ seekSlide=document.getElementById("red"),
 currentTi=document.getElementById("currenttime"),
 durationTi=document.getElementById("durationtime"),
 soundSlider=document.getElementById("soundslider"),
-next=document.getElementById("changeVideo"),
-a=document.querySelectorAll("a"),
+li=document.querySelectorAll("li"),
+playlist=document.querySelector("ul");
 m=true,
 isFullScreen=false,
+fileInput=document.querySelector("input[type=file]"),
+uploadedVideo={
+	video:String,
+	source:String
+},
 i=0;
-
+	
 pbutton.addEventListener("click",playpause);
 muted.addEventListener("click",volumeVideo);
 res.addEventListener("click",restart1);
 back5.addEventListener("click",backBy5);
 for5.addEventListener("click",forwardBy5);
-video.addEventListener("ended",end);
 fullScreen.addEventListener("click",toggleFullScreen);
 seekSlider.addEventListener("change",vidSeek);
 video.addEventListener("timeupdate",updateSeek);
 soundSlider.addEventListener("change",soundSeek);
-next.addEventListener("click",nextVideo);
-a.forEach(function(a){
-	a.addEventListener("click",show);
+fileInput.addEventListener("change",playFile);
+video.addEventListener("ended",end);
+	
+document.addEventListener('keydown', e => {
+	switch (e.keyCode) {
+		case 32:
+			video.paused ? video.play() : video.pause();
+			break;
+		case 37: 
+			video.currentTime += -5;
+			break;
+		case 39:
+			video.currentTime += 5;
+		break;
+	}
 });
 
 
@@ -206,10 +207,25 @@ function soundSeek()
 		muted.style.color="red";
 	}
 }
+function playFile()
+{
+	var listItem = document.createElement('li');
+	playlist.appendChild(listItem);
+	var file=this.files[0];
+	listItem.objUrl = URL.createObjectURL(file);
+	listItem.textContent = file.name;
+	listItem.addEventListener('click', function (e) {
+			video.setAttribute("src", this.objUrl);
+	});
+	playlist.appendChild(listItem);
+	uploadedVideo.source = URL.createObjectURL(file);
+	uploadedVideo.video=file.name;
+	newVideo.push(uploadedVideo);
+} 
 
 function nextVideo()
 {
-	if(i<=newVideo.length-1)
+	if(i<newVideo.length)
 	{
 		video.pause();
 		video.setAttribute("src",newVideo[i++]["source"]);
@@ -229,21 +245,6 @@ function nextVideo()
 	}
 }
 
-function show()
-{
-	var source="D:/udemy/video/Sample Video/"+this.innerHTML;
-	video.pause();
-	video.currentTime=0.0;
-	var nt=video.currentTime*(100/video.duration);
-	seekSlider.value=nt;
-	seekSlide.style.width = nt +"%";
-	video.setAttribute("src",source);
-	video.load();
-	video.pause();
-	pbutton.classList.add("fa-google-play");
-	pbutton.classList.remove("fa-pause");
-	pbutton.style.fontSize="22px";
-}
 
 function end()
 {
@@ -251,5 +252,6 @@ function end()
 	pbutton.classList.add("fa-google-play");
 	pbutton.classList.remove("fa-pause");
 	pbutton.style.fontSize="22px";
-	nextVideo();
+	alert("Video ended");
 }
+

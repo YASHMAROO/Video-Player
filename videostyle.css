@@ -182,32 +182,30 @@ input[type='range']:hover::-webkit-slider-thumb
 {
 	text-align: center;
 	margin-top: -100px;
-	margin-left: 45%;
-	max-width: 200px;
+	margin-left: 38%;
+	max-width: 400px;
 	line-height: 40px;
 }
-p
+li
 {
 	background: #fff;
 }
-a
+li
 {
 	color: red;
 	text-decoration: none;	
+	list-style-type: none;
 }
-p:nth-child(2n)
+li:nth-child(2n)
 {
 	background-color: #1eea7e;
 }
-p:hover
+li:hover
 {
 	background: blue;
+	text-decoration: underline;
 }
 h4
 {
 	background: #2980b9;
-}
-a:hover
-{
-	text-decoration: underline;
 }
