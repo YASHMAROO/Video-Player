@@ -1,43 +1,30 @@
-var newVideo=[
-	{
-		video:"Video",
-		source:"Sample Video/video.mp4"
-	}
-];
+let newVideo=[],m=true,isFullScreen=false,i;
 
-var pbutton=document.querySelector("#play"),
-muted=document.getElementById("mute"),
-video=document.querySelector(".video"),
-res=document.querySelector("#reset"),
-fullVideo=document.querySelector(".c-video"),
-back5=document.getElementById("back"),
-for5=document.getElementById("for"),
-prog=document.querySelector(".progress"),
-fullScreen=document.querySelector("#fullscreen"),
-seekSlider=document.getElementById("seekslider"),
-seekSlide=document.getElementById("red"),
-currentTi=document.getElementById("currenttime"),
-durationTi=document.getElementById("durationtime"),
-soundSlider=document.getElementById("soundslider"),
-li=document.querySelectorAll("li"),
-playlist=document.querySelector("ul");
-m=true,
-isFullScreen=false,
-fileInput=document.querySelector("input[type=file]"),
-uploadedVideo={
-	video:String,
-	source:String
-},
-i=0;
+const  play=document.querySelector("#play"),
+	   muted=document.getElementById("mute"),
+	   video=document.querySelector(".video"),
+	   res=document.querySelector("#reset"),
+	   fullVideo=document.querySelector(".c-video"),
+	   back5=document.getElementById("back"),
+	   for5=document.getElementById("for"),
+	   prog=document.querySelector(".progress"),
+	   fullScreen=document.querySelector("#fullscreen"),
+	   seekSlider=document.getElementById("seekslider"),
+	   seekSlide=document.getElementById("red"),
+	   currentTi=document.getElementById("currenttime"),
+	   durationTi=document.getElementById("durationtime"),
+	   soundSlider=document.getElementById("soundslider"),
+	   playlist=document.querySelector("ul"),
+	   fileInput=document.querySelector("input[type=file]");
 	
-pbutton.addEventListener("click",playpause);
-muted.addEventListener("click",volumeVideo);
-res.addEventListener("click",restart1);
+seekSlider.addEventListener("change",vidSeek);
+video.addEventListener("timeupdate",updateSeek);	
+play.addEventListener("click",playpause);
+muted.addEventListener("click",volume);
+res.addEventListener("click",restart);
 back5.addEventListener("click",backBy5);
 for5.addEventListener("click",forwardBy5);
 fullScreen.addEventListener("click",toggleFullScreen);
-seekSlider.addEventListener("change",vidSeek);
-video.addEventListener("timeupdate",updateSeek);
 soundSlider.addEventListener("change",soundSeek);
 fileInput.addEventListener("change",playFile);
 video.addEventListener("ended",end);
@@ -56,26 +43,63 @@ document.addEventListener('keydown', e => {
 	}
 });
 
+function vidSeek()
+{
+	var ut=video.duration*(seekSlider.value/100);
+	video.currentTime=ut;
+}
+
+function updateSeek()
+{
+	var nt=video.currentTime*(100/video.duration);
+	seekSlider.value=nt;
+	seekSlide.style.width = nt +"%";
+	var curmin=Math.floor(video.currentTime/60);
+	var cursec=Math.floor(video.currentTime-curmin*60);
+	var durmin=Math.floor(video.duration/60);
+	var dursec=Math.round(video.duration-durmin*60);
+	if(cursec<10)
+	{
+		cursec="0"+cursec;
+	}
+	
+	if(curmin<10)
+	{
+		curmin="0"+curmin;
+	}
+	
+	if(dursec<10)
+	{
+		dursec="0"+dursec;
+	}
+
+	if(durmin<10)
+	{
+		durmin="0"+durmin;
+	}
+	currentTi.innerHTML=curmin+":"+cursec;
+	durationTi.innerHTML=durmin+":"+dursec;
+}
 
 function playpause()
 {
 	if(video.paused)
 	{
 		video.play();		
-		pbutton.classList.remove("fa-google-play");
-		pbutton.classList.add("fa-pause");
-		pbutton.style.fontSize="22px";
+		play.classList.remove("fa-google-play");
+		play.classList.add("fa-pause");
+		play.style.fontSize="22px";
 	}
 	else
 	{
 		video.pause();
-		pbutton.classList.add("fa-google-play");
-		pbutton.classList.remove("fa-pause");
-		pbutton.style.fontSize="22px";
+		play.classList.add("fa-google-play");
+		play.classList.remove("fa-pause");
+		play.style.fontSize="22px";
 	}
 }
 
-function volumeVideo()
+function volume()
 {
 	if(m)
 	{
@@ -97,7 +121,7 @@ function volumeVideo()
 	m=!m;
 }
 
-function restart1()
+function restart()
 {
 	video.currentTime=0;
 }
@@ -151,43 +175,6 @@ function toggleFullScreen()
 	}
 }
 
-function vidSeek()
-{
-	var ut=video.duration*(seekSlider.value/100);
-	video.currentTime=ut;
-}
-
-function updateSeek()
-{
-	var nt=video.currentTime*(100/video.duration);
-	seekSlider.value=nt;
-	seekSlide.style.width = nt +"%";
-	var curmin=Math.floor(video.currentTime/60);
-	var cursec=Math.floor(video.currentTime-curmin*60);
-	var durmin=Math.floor(video.duration/60);
-	var dursec=Math.round(video.duration-durmin*60);
-	if(cursec<10)
-	{
-		cursec="0"+cursec;
-	}
-	
-	if(curmin<10)
-	{
-		curmin="0"+curmin;
-	}
-	
-	if(dursec<10)
-	{
-		dursec="0"+dursec;
-	}
-
-	if(durmin<10)
-	{
-		durmin="0"+durmin;
-	}
-	currentTi.innerHTML=curmin+":"+cursec;
-	durationTi.innerHTML=durmin+":"+dursec;
-}
 
 function soundSeek()
 {
@@ -209,50 +196,57 @@ function soundSeek()
 }
 function playFile()
 {
-	var listItem = document.createElement('li');
-	playlist.appendChild(listItem);
-	var file=this.files[0];
-	listItem.objUrl = URL.createObjectURL(file);
-	listItem.textContent = file.name;
-	listItem.addEventListener('click', function (e) {
+	for (const file of Array.from(this.files))
+	{
+		var listItem = document.createElement('li');
+		playlist.appendChild(listItem);
+		listItem.objUrl = URL.createObjectURL(file);
+		listItem.textContent = file.name;
+		newVideo.push(listItem);
+		listItem.addEventListener('click', function(e) 
+		{
 			video.setAttribute("src", this.objUrl);
-	});
-	playlist.appendChild(listItem);
-	uploadedVideo.source = URL.createObjectURL(file);
-	uploadedVideo.video=file.name;
-	newVideo.push(uploadedVideo);
-} 
+			play.classList.add("fa-google-play");
+			play.classList.remove("fa-pause");
+			for(j=0;j<newVideo.length;j++)
+			{
+				if(this.textContent==newVideo[j].textContent)
+				{
+					i=j;
+					break;
+				}
+			}
+		});
+		playlist.appendChild(listItem);
+	}
+	
+}
 
-function nextVideo()
+function nextVideo(pos)
 {
-	if(i<newVideo.length)
-	{
-		video.pause();
-		video.setAttribute("src",newVideo[i++]["source"]);
-		video.currentTime=0.0;
-		var nt=video.currentTime*(100/video.duration);
-		seekSlider.value=nt;
-		seekSlide.style.width = nt +"%";
-		video.load();
-		video.pause();
-		pbutton.classList.add("fa-google-play");
-		pbutton.classList.remove("fa-pause");
-		pbutton.style.fontSize="22px";
-	}
-	else
-	{
-		i=0;
-	}
+	video.pause();
+	video.currentTime=0.0;
+	var nt=video.currentTime*(100/video.duration);
+	seekSlider.value=nt;
+	seekSlide.style.width = nt +"%";
+	video.setAttribute("src",newVideo[pos].objUrl);
+	video.load();
+	video.pause();
+	play.classList.add("fa-google-play");
+	play.classList.remove("fa-pause");
 }
 
 
 function end()
 {
-	video.currentTime=0.0;
-	pbutton.classList.add("fa-google-play");
-	pbutton.classList.remove("fa-pause");
-	pbutton.style.fontSize="22px";
 	alert("Video ended");
-	nextVideo();
+	if(i==newVideo.length-1)
+	{
+		nextVideo(0);
+	}
+	else
+	{
+		nextVideo(++i);
+	}
 }
 
