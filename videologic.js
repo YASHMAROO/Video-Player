@@ -231,7 +231,7 @@ function nextVideo()
 
 function show()
 {
-	var source="D:/udemy/video/Sample Video/"+this.innerHTML;
+	var source="Sample Video/"+this.innerHTML;
 	video.pause();
 	video.currentTime=0.0;
 	var nt=video.currentTime*(100/video.duration);
