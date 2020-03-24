@@ -253,5 +253,6 @@ function end()
 	pbutton.classList.remove("fa-pause");
 	pbutton.style.fontSize="22px";
 	alert("Video ended");
+	nextVideo();
 }
 
