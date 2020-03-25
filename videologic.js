@@ -1,80 +1,105 @@
-var newVideo=[
-	{
-		video: "Video",
-		source: "Sample Video/video.mp4"
-	},
-	{
-		video: "Video 2",
-		source: "Sample Video/Video2.mp4"
-	},
-	{
-		video: "Singham",
-		source: "Sample Video/Singham.mp4"
-	},
-	{
-		video: "Mr.Bean",
-		source: "Sample Video/Mr. Bean.mp4"
-	},
-	{
-		video: "Father on Holidays",
-		source: "Sample Video/Father on Holidays"
-	}
-];
-var pbutton=document.querySelector("#play"),
-muted=document.getElementById("mute"),
-video=document.querySelector(".video"),
-res=document.querySelector("#reset"),
-fullVideo=document.querySelector(".c-video"),
-back5=document.getElementById("back"),
-for5=document.getElementById("for"),
-prog=document.querySelector(".progress"),
-fullScreen=document.querySelector("#fullscreen"),
-seekSlider=document.getElementById("seekslider"),
-seekSlide=document.getElementById("red"),
-currentTi=document.getElementById("currenttime"),
-durationTi=document.getElementById("durationtime"),
-soundSlider=document.getElementById("soundslider"),
-next=document.getElementById("changeVideo"),
-a=document.querySelectorAll("a"),
-m=true,
-isFullScreen=false,
-i=0;
+let newVideo=[],m=true,isFullScreen=false,i;
 
-pbutton.addEventListener("click",playpause);
-muted.addEventListener("click",volumeVideo);
-res.addEventListener("click",restart1);
+const  play=document.querySelector("#play"),
+	   muted=document.getElementById("mute"),
+	   video=document.querySelector(".video"),
+	   res=document.querySelector("#reset"),
+	   fullVideo=document.querySelector(".c-video"),
+	   back5=document.getElementById("back"),
+	   for5=document.getElementById("for"),
+	   prog=document.querySelector(".progress"),
+	   fullScreen=document.querySelector("#fullscreen"),
+	   seekSlider=document.getElementById("seekslider"),
+	   seekSlide=document.getElementById("red"),
+	   currentTi=document.getElementById("currenttime"),
+	   durationTi=document.getElementById("durationtime"),
+	   soundSlider=document.getElementById("soundslider"),
+	   playlist=document.querySelector("ul"),
+	   fileInput=document.querySelector("input[type=file]");
+	
+seekSlider.addEventListener("change",vidSeek);
+video.addEventListener("timeupdate",updateSeek);	
+play.addEventListener("click",playpause);
+muted.addEventListener("click",volume);
+res.addEventListener("click",restart);
 back5.addEventListener("click",backBy5);
 for5.addEventListener("click",forwardBy5);
-video.addEventListener("ended",end);
 fullScreen.addEventListener("click",toggleFullScreen);
-seekSlider.addEventListener("change",vidSeek);
-video.addEventListener("timeupdate",updateSeek);
 soundSlider.addEventListener("change",soundSeek);
-next.addEventListener("click",nextVideo);
-a.forEach(function(a){
-	a.addEventListener("click",show);
+fileInput.addEventListener("change",playFile);
+video.addEventListener("ended",end);
+	
+document.addEventListener('keydown', e => {
+	switch (e.keyCode) {
+		case 32:
+			video.paused ? video.play() : video.pause();
+			break;
+		case 37: 
+			video.currentTime += -5;
+			break;
+		case 39:
+			video.currentTime += 5;
+		break;
+	}
 });
 
+function vidSeek()
+{
+	var ut=video.duration*(seekSlider.value/100);
+	video.currentTime=ut;
+}
+
+function updateSeek()
+{
+	var nt=video.currentTime*(100/video.duration);
+	seekSlider.value=nt;
+	seekSlide.style.width = nt +"%";
+	var curmin=Math.floor(video.currentTime/60);
+	var cursec=Math.floor(video.currentTime-curmin*60);
+	var durmin=Math.floor(video.duration/60);
+	var dursec=Math.round(video.duration-durmin*60);
+	if(cursec<10)
+	{
+		cursec="0"+cursec;
+	}
+	
+	if(curmin<10)
+	{
+		curmin="0"+curmin;
+	}
+	
+	if(dursec<10)
+	{
+		dursec="0"+dursec;
+	}
+
+	if(durmin<10)
+	{
+		durmin="0"+durmin;
+	}
+	currentTi.innerHTML=curmin+":"+cursec;
+	durationTi.innerHTML=durmin+":"+dursec;
+}
 
 function playpause()
 {
 	if(video.paused)
 	{
 		video.play();		
-		pbutton.classList.remove("fa-google-play");
-		pbutton.classList.add("fa-pause");
-		pbutton.style.fontSize="22px";
+		play.classList.remove("fa-google-play");
+		play.classList.add("fa-pause");
+		play.style.fontSize="22px";
 	}
 	else
 	{
 		video.pause();
-		pbutton.classList.add("fa-google-play");
-		pbutton.classList.remove("fa-pause");
-		pbutton.style.fontSize="22px";
+		play.classList.add("fa-google-play");
+		play.classList.remove("fa-pause");
+		play.style.fontSize="22px";
 	}
 }
 
-function volumeVideo()
+function volume()
 {
 	if(m)
 	{
@@ -96,7 +121,7 @@ function volumeVideo()
 	m=!m;
 }
 
-function restart1()
+function restart()
 {
 	video.currentTime=0;
 }
@@ -150,43 +175,6 @@ function toggleFullScreen()
 	}
 }
 
-function vidSeek()
-{
-	var ut=video.duration*(seekSlider.value/100);
-	video.currentTime=ut;
-}
-
-function updateSeek()
-{
-	var nt=video.currentTime*(100/video.duration);
-	seekSlider.value=nt;
-	seekSlide.style.width = nt +"%";
-	var curmin=Math.floor(video.currentTime/60);
-	var cursec=Math.floor(video.currentTime-curmin*60);
-	var durmin=Math.floor(video.duration/60);
-	var dursec=Math.round(video.duration-durmin*60);
-	if(cursec<10)
-	{
-		cursec="0"+cursec;
-	}
-	
-	if(curmin<10)
-	{
-		curmin="0"+curmin;
-	}
-	
-	if(dursec<10)
-	{
-		dursec="0"+dursec;
-	}
-
-	if(durmin<10)
-	{
-		durmin="0"+durmin;
-	}
-	currentTi.innerHTML=curmin+":"+cursec;
-	durationTi.innerHTML=durmin+":"+dursec;
-}
 
 function soundSeek()
 {
@@ -206,50 +194,60 @@ function soundSeek()
 		muted.style.color="red";
 	}
 }
-
-function nextVideo()
+function playFile()
 {
-	if(i<=newVideo.length-1)
+	for (const file of Array.from(this.files))
 	{
-		video.pause();
-		video.setAttribute("src",newVideo[i++]["source"]);
-		video.currentTime=0.0;
-		var nt=video.currentTime*(100/video.duration);
-		seekSlider.value=nt;
-		seekSlide.style.width = nt +"%";
-		video.load();
-		video.pause();
-		pbutton.classList.add("fa-google-play");
-		pbutton.classList.remove("fa-pause");
-		pbutton.style.fontSize="22px";
+		var listItem = document.createElement('li');
+		playlist.appendChild(listItem);
+		listItem.objUrl = URL.createObjectURL(file);
+		listItem.textContent = file.name;
+		newVideo.push(listItem);
+		listItem.addEventListener('click', function(e) 
+		{
+			seekSlider.value=0;
+			seekSlide.style.width = 0 +"%";
+			video.setAttribute("src", this.objUrl);
+			play.classList.add("fa-google-play");
+			play.classList.remove("fa-pause");
+			for(j=0;j<newVideo.length;j++)
+			{
+				if(this.textContent==newVideo[j].textContent)
+				{
+					i=j;
+					break;
+				}
+			}
+		});
+		playlist.appendChild(listItem);
 	}
-	else
-	{
-		i=0;
-	}
+	
 }
 
-function show()
+function nextVideo(pos)
 {
-	var source="Sample Video/"+this.innerHTML;
 	video.pause();
 	video.currentTime=0.0;
 	var nt=video.currentTime*(100/video.duration);
 	seekSlider.value=nt;
 	seekSlide.style.width = nt +"%";
-	video.setAttribute("src",source);
+	video.setAttribute("src",newVideo[pos].objUrl);
 	video.load();
 	video.pause();
-	pbutton.classList.add("fa-google-play");
-	pbutton.classList.remove("fa-pause");
-	pbutton.style.fontSize="22px";
+	play.classList.add("fa-google-play");
+	play.classList.remove("fa-pause");
 }
+
 
 function end()
 {
-	video.currentTime=0.0;
-	pbutton.classList.add("fa-google-play");
-	pbutton.classList.remove("fa-pause");
-	pbutton.style.fontSize="22px";
-	nextVideo();
+	alert("Video ended");
+	if(i==newVideo.length-1)
+	{
+		nextVideo(0);
+	}
+	else
+	{
+		nextVideo(++i);
+	}
 }
