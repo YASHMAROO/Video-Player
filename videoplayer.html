@@ -5,10 +5,11 @@
 	<link rel="stylesheet" type="text/css" href="videostyle.css">
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
 <body>
+	<input type="file" accept="video/*"/ multiple>
 	<div class="container">
 		<div class="c-video">
 			<video  class="video" id="video1"> 
-				<source src="Sample video/video.mp4" type="video/mp4"> 
+				<source src="Sample Video/video.mp4" type="video/mp4"> 
 				THE VIDEO CANNOT BE PLAYED.... 
 			</video>
 			
@@ -21,8 +22,7 @@
 					<span id="currenttime">00:00</span><span id="slash">  /  </span><span id="durationtime">00:00</span>
 					<button id="for" title="Forward by 5s" class="fas fa-forward"></button> 
 					<button id="reset" title="Replay video" class="fab fa-rev"></button>					
-					<button id="fullscreen" title="Fullscreen" class="fas fa-expand"></button>
-					<button id="changeVideo" title="Next video" class="fas fa-step-forward"></button>	
+					<button id="fullscreen" title="Fullscreen" class="fas fa-expand"></button>	
 					<div class="seekbar">
 						<input id="seekslider" type="range" min="0" max="100" value="0" range="1" title="Movie seek">
 						<div class="red" id="red" style="position: absolute; background: #f00; height: 4px; width: 0;bottom: 49px;left: -0.1%"></div>
@@ -32,12 +32,9 @@
 		</div>
 	</div>
 	<div class="videolist">
-		<h4>List of Videos in the playlist</h4>
-		<p><a href="#" class="v1">Video.mp4</a></p>
-		<p><a href="#" class="v2">Video2.mp4</a></p>
-		<p><a href="#" class="v3">Singham.mp4</a></p>
-		<p><a href="#" class="v4">Mr. Bean.mp4</a></p>
-		<p><a href="#" class="v5">Father on Holidays.mp4</a></p>
+		<ul>
+			<h4>List of Videos in the playlist</h4>
+		</ul>
 	</div>
 	<script src="videologic.js"></script>
 </body> 
