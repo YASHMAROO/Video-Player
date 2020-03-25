@@ -1,4 +1,3 @@
-
 html
 {
 	background: #009FFF;  /* fallback for old browsers */
@@ -17,6 +16,7 @@ body
 }
 .container
 {
+	position: relative;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -181,33 +181,31 @@ input[type='range']:hover::-webkit-slider-thumb
 .videolist
 {
 	text-align: center;
-	margin-top: -100px;
-	margin-left: 45%;
-	max-width: 200px;
+	align-items: center;
+	margin: auto;
+	max-width: 400px;
 	line-height: 40px;
 }
-p
+li
 {
 	background: #fff;
 }
-a
+li
 {
 	color: red;
 	text-decoration: none;	
+	list-style-type: none;
 }
-p:nth-child(2n)
+li:nth-child(2n)
 {
 	background-color: #1eea7e;
 }
-p:hover
+li:hover
 {
 	background: blue;
+	text-decoration: underline;
 }
 h4
 {
 	background: #2980b9;
-}
-a:hover
-{
-	text-decoration: underline;
 }
